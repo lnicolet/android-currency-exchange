@@ -2,7 +2,7 @@ package com.lnicolet.currencyexchange.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.lnicolet.currencyexchange.CurrencyExchangeViewModel
+import com.lnicolet.currencyexchange.exchangelist.CurrencyExchangeViewModel
 import com.lnicolet.currencyexchange.core.ViewModelFactory
 import com.lnicolet.currencyexchange.core.ViewModelKey
 import dagger.Binds

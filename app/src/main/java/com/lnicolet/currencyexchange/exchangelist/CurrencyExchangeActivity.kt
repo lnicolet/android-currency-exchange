@@ -1,8 +1,8 @@
-package com.lnicolet.currencyexchange
+package com.lnicolet.currencyexchange.exchangelist
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.lnicolet.currencyexchange.R
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
