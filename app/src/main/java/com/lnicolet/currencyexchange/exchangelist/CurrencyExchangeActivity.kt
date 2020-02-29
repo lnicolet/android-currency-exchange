@@ -3,11 +3,9 @@ package com.lnicolet.currencyexchange.exchangelist
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.lnicolet.currencyexchange.R
-import com.lnicolet.currencyexchange.core.Status
 import com.lnicolet.currencyexchange.core.gone
 import com.lnicolet.currencyexchange.core.observe
 import com.lnicolet.currencyexchange.core.visible
-import com.lnicolet.currencyexchange.exchangelist.model.CurrencyExchangeViewState
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,16 +32,16 @@ class CurrencyExchangeActivity : DaggerAppCompatActivity() {
     }
 
     private fun render(currencyExchangeViewState: CurrencyExchangeViewState?) {
-        when(currencyExchangeViewState?.status) {
-            Status.Loading -> {
+        when(currencyExchangeViewState) {
+            CurrencyExchangeViewState.Loading -> {
                 loading.visible()
                 recycler.gone()
             }
-            is Status.Error<*> -> {
+            is CurrencyExchangeViewState.Error<*> -> {
                 loading.gone()
                 recycler.gone()
             }
-            is Status.Success<*> -> {
+            is CurrencyExchangeViewState.Success -> {
                 loading.gone()
                 recycler.visible()
 
