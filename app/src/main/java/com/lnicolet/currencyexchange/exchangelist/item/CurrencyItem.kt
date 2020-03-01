@@ -39,6 +39,13 @@ data class CurrencyItem(
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.root.apply {
+            setOnClickListener {
+                listener.onCurrencyItemClicked(
+                    this@CurrencyItem.currencyExchange
+                )
+                currency_value_conversion.requestFocus()
+            }
+
             if (isActive)
                 currency_value_conversion.addTextChangedListener(onValueChangedWatcher)
             else
