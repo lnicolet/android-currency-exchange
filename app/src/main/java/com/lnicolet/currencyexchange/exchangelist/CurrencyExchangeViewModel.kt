@@ -19,10 +19,10 @@ class CurrencyExchangeViewModel @Inject constructor(
     val currencyExchangeViewState: LiveData<CurrencyExchangeViewState>
         get() = _currencyExchangeViewState
 
-    private var exchangeConversionValue: Double = 1.0
+    private var firstResponder: CurrencyExchange = CurrencyExchange(CurrencyModel.EUR, 1.0, 1.0)
 
     fun updateViewStateWithConversion(newValue: Double) {
-        exchangeConversionValue = newValue
+        firstResponder.baseValue = newValue
         _currencyExchangeViewState.postValue(
             _currencyExchangeViewState.value.apply {
                 if (this is CurrencyExchangeViewState.Success) {
@@ -30,7 +30,7 @@ class CurrencyExchangeViewModel @Inject constructor(
                         CurrencyExchange(
                             it.currencyModel,
                             it.exchangeRate,
-                            exchangeConversionValue
+                            newValue
                         )
                     }
                 }
@@ -39,6 +39,7 @@ class CurrencyExchangeViewModel @Inject constructor(
     }
 
     fun updateFirstResponder(currencyExchange: CurrencyExchange) {
+        lastDisposable?.dispose()
         _currencyExchangeViewState.postValue(
             _currencyExchangeViewState.value.apply {
                 if (this is CurrencyExchangeViewState.Success) {
@@ -65,7 +66,7 @@ class CurrencyExchangeViewModel @Inject constructor(
                         CurrencyExchange(
                             rateModel.currency,
                             rateModel.value,
-                            exchangeConversionValue * rateModel.value
+                            firstResponder.baseValue * rateModel.value
                         )
                     }.toMutableList()
 
