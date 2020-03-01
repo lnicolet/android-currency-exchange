@@ -11,7 +11,6 @@ import com.lnicolet.domain.model.CurrencyModel
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.item_currency.view.*
-import java.text.DecimalFormat
 
 data class CurrencyItem(
     private var currencyExchange: CurrencyExchange,
@@ -23,22 +22,19 @@ data class CurrencyItem(
         fun onCurrencyValueChanged(newValue: Double)
     }
 
-    private val decimalFormat = DecimalFormat("#.###")
-
     override fun getId() = this.currencyExchange.currencyModel.hashCode().toLong()
 
     override fun getLayout(): Int = R.layout.item_currency
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.root.apply {
-
             this.setOnClickListener {
                 listener.onCurrencyItemClicked(this@CurrencyItem.currencyExchange)
             }
             currency_model_text.text = currencyExchange.currencyModel.name
 
             currency_value_conversion.setText(
-                String.format("%.2f", currencyExchange.exchangeConversion)
+                String.format("%.2f", currencyExchange.getExchangeConversion())
             )
             currency_flag.setImageDrawable(
                 getDrawableByCurrencyModel(

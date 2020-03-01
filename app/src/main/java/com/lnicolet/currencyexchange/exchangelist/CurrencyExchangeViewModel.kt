@@ -30,9 +30,23 @@ class CurrencyExchangeViewModel @Inject constructor(
                         CurrencyExchange(
                             it.currencyModel,
                             it.exchangeRate,
-                            it.exchangeConversion * exchangeConversionValue
+                            exchangeConversionValue
                         )
                     }
+                }
+            }
+        )
+    }
+
+    fun updateFirstResponder(currencyExchange: CurrencyExchange) {
+        _currencyExchangeViewState.postValue(
+            _currencyExchangeViewState.value.apply {
+                if (this is CurrencyExchangeViewState.Success) {
+                    this.value.add(this.firstResponder)
+                    this.value.removeAll {
+                        it == currencyExchange
+                    }
+                    this.firstResponder = currencyExchange
                 }
             }
         )
@@ -55,9 +69,11 @@ class CurrencyExchangeViewModel @Inject constructor(
                         )
                     }.toMutableList()
 
-                    currencyList.add(0, CurrencyExchange(exchangeModel.baseCurrency, 1.0, 1.0))
                     _currencyExchangeViewState.postValue(
-                        CurrencyExchangeViewState.Success(currencyList)
+                        CurrencyExchangeViewState.Success(
+                            CurrencyExchange(exchangeModel.baseCurrency, 1.0, 1.0),
+                            currencyList
+                        )
                     )
                 },
                 {
@@ -80,5 +96,8 @@ class CurrencyExchangeViewModel @Inject constructor(
 sealed class CurrencyExchangeViewState {
     object Loading : CurrencyExchangeViewState()
     data class Error<E>(val reason: E) : CurrencyExchangeViewState()
-    data class Success(val value: List<CurrencyExchange>) : CurrencyExchangeViewState()
+    data class Success(
+        var firstResponder: CurrencyExchange,
+        val value: MutableList<CurrencyExchange>
+    ) : CurrencyExchangeViewState()
 }

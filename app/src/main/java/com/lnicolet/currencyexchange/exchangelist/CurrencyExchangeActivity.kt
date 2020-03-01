@@ -1,7 +1,6 @@
 package com.lnicolet.currencyexchange.exchangelist
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +12,7 @@ import com.lnicolet.currencyexchange.exchangelist.item.CurrencyItem
 import com.lnicolet.currencyexchange.exchangelist.model.CurrencyExchange
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Section
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,6 +37,7 @@ class CurrencyExchangeActivity : DaggerAppCompatActivity(), CurrencyItem.Currenc
     private fun setupRecycler() {
         recycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recycler.adapter = groupAdapter
+        recycler.setHasFixedSize(true)
 
     }
 
@@ -59,17 +60,28 @@ class CurrencyExchangeActivity : DaggerAppCompatActivity(), CurrencyItem.Currenc
             is CurrencyExchangeViewState.Success -> {
                 loading.gone()
                 recycler.visible()
-                groupAdapter.update(
-                    currencyExchangeViewState.value.map {
+                val section = mutableListOf<CurrencyItem>()
+                section.add(
+                    0, CurrencyItem(
+                        currencyExchangeViewState.firstResponder,
+                        this@CurrencyExchangeActivity
+                    )
+                )
+                section.addAll(
+                    currencyExchangeViewState.value.sortedBy {
+                        it.currencyModel.name
+                    }.map {
                         CurrencyItem(it, this@CurrencyExchangeActivity)
                     }
                 )
+                groupAdapter.update(section, true)
+                recycler.scrollToPosition(0)
             }
         }
     }
 
     override fun onCurrencyItemClicked(currencyExchange: CurrencyExchange) {
-
+        viewModel.updateFirstResponder(currencyExchange)
     }
 
     override fun onCurrencyValueChanged(newValue: Double) {
