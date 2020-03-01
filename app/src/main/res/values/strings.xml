@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CurrencyExchange</string>
+    <string name="currency_content_description">Flag for the currency</string>
+    <string name="enter_value">Enter value</string>
 </resources>
