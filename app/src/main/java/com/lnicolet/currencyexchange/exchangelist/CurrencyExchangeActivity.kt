@@ -12,7 +12,6 @@ import com.lnicolet.currencyexchange.exchangelist.item.CurrencyItem
 import com.lnicolet.currencyexchange.exchangelist.model.CurrencyExchange
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import com.xwray.groupie.Section
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -64,18 +63,16 @@ class CurrencyExchangeActivity : DaggerAppCompatActivity(), CurrencyItem.Currenc
                 section.add(
                     0, CurrencyItem(
                         currencyExchangeViewState.firstResponder,
+                        true,
                         this@CurrencyExchangeActivity
                     )
                 )
                 section.addAll(
-                    currencyExchangeViewState.value.sortedBy {
-                        it.currencyModel.name
-                    }.map {
-                        CurrencyItem(it, this@CurrencyExchangeActivity)
+                    currencyExchangeViewState.value.map {
+                        CurrencyItem(it, false, this@CurrencyExchangeActivity)
                     }
                 )
                 groupAdapter.update(section, true)
-                recycler.scrollToPosition(0)
             }
         }
     }

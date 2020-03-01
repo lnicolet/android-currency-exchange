@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.MotionEvent
 import androidx.core.content.ContextCompat
 import com.lnicolet.currencyexchange.R
 import com.lnicolet.currencyexchange.exchangelist.model.CurrencyExchange
@@ -14,6 +16,7 @@ import kotlinx.android.synthetic.main.item_currency.view.*
 
 data class CurrencyItem(
     private var currencyExchange: CurrencyExchange,
+    val isActive: Boolean = false,
     private val listener: CurrencyItemListener
 ) : Item<GroupieViewHolder>() {
 
@@ -22,17 +25,26 @@ data class CurrencyItem(
         fun onCurrencyValueChanged(newValue: Double)
     }
 
+    private val onValueChangedWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            listener.onCurrencyValueChanged(s?.toString()?.toDoubleOrNull() ?: 0.0)
+        }
+    }
+
     override fun getId() = this.currencyExchange.currencyModel.hashCode().toLong()
 
     override fun getLayout(): Int = R.layout.item_currency
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.root.apply {
-            this.setOnClickListener {
-                listener.onCurrencyItemClicked(this@CurrencyItem.currencyExchange)
-            }
-            currency_model_text.text = currencyExchange.currencyModel.name
+            if (isActive)
+                currency_value_conversion.addTextChangedListener(onValueChangedWatcher)
+            else
+                currency_value_conversion.removeTextChangedListener(onValueChangedWatcher)
 
+            currency_model_text.text = currencyExchange.currencyModel.name
             currency_value_conversion.setText(
                 String.format("%.2f", currencyExchange.getExchangeConversion())
             )
@@ -43,28 +55,13 @@ data class CurrencyItem(
                 )
             )
 
-            if (position == 0) {
-                currency_value_conversion.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable?) {}
-
-                    override fun beforeTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-                        listener.onCurrencyValueChanged(s?.toString()?.toDoubleOrNull() ?: 1.0)
-                    }
-
-                })
+            currency_value_conversion.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    listener.onCurrencyItemClicked(
+                        this@CurrencyItem.currencyExchange
+                    )
+                }
+                false
             }
         }
     }
