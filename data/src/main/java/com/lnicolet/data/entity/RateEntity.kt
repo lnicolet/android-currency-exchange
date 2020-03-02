@@ -9,5 +9,4 @@ data class RateEntity(
 ) {
     fun toDomain() =
         RateModel(CurrencyModel.valueOf(currency), value)
-
 }

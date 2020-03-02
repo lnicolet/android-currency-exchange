@@ -21,7 +21,7 @@ class CurrencyEntityDeserializer : JsonDeserializer<CurrencyEntity> {
             ""
         }
         val rates = mutableListOf<RateEntity>()
-        val ratesJsonObject = jsonObject.getAsJsonObject("rates")
+        val ratesJsonObject = jsonObject.getAsJsonObject(RATES_KEY)
         ratesJsonObject.keySet().forEach { key ->
             rates.add(RateEntity(key, ratesJsonObject.get(key).asDouble))
         }
@@ -32,3 +32,4 @@ class CurrencyEntityDeserializer : JsonDeserializer<CurrencyEntity> {
 }
 
 private const val BASE_CURRENCY_KEY = "baseCurrency"
+private const val RATES_KEY = "rates"

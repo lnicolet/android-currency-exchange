@@ -10,7 +10,7 @@ data class CurrencyEntity(
     val baseCurrency: String,
     val rates: List<RateEntity>
 ) {
-    fun toDomain(): CurrenciesExchangeModel? = CurrenciesExchangeModel(
+    fun toDomain(): CurrenciesExchangeModel = CurrenciesExchangeModel(
         CurrencyModel.valueOf(baseCurrency),
         rates.map { it.toDomain() }
     )
