@@ -68,7 +68,7 @@ class CurrencyExchangeActivity : DaggerAppCompatActivity(), CurrencyItem.Currenc
                     )
                 )
                 section.addAll(
-                    currencyExchangeViewState.value.map {
+                    currencyExchangeViewState.currencyExchangeList.map {
                         CurrencyItem(it, false, this@CurrencyExchangeActivity)
                     }
                 )

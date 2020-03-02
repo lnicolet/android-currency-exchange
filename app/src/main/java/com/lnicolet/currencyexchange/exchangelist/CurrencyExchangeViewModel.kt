@@ -33,7 +33,7 @@ class CurrencyExchangeViewModel @Inject constructor(
         _currencyExchangeViewState.postValue(
             _currencyExchangeViewState.value.apply {
                 if (this is CurrencyExchangeViewState.Success) {
-                    this.value.map {
+                    this.currencyExchangeList.map {
                         CurrencyExchange(
                             it.currencyModel,
                             it.exchangeRate,
@@ -100,6 +100,6 @@ sealed class CurrencyExchangeViewState {
     data class Error<E>(val reason: E) : CurrencyExchangeViewState()
     data class Success(
         var firstResponder: CurrencyExchange,
-        val value: MutableList<CurrencyExchange>
+        val currencyExchangeList: MutableList<CurrencyExchange>
     ) : CurrencyExchangeViewState()
 }
