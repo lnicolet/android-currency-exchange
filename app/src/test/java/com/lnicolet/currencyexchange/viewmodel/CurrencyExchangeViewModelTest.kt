@@ -23,7 +23,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import org.mockito.stubbing.Answer
 import org.powermock.modules.junit4.PowerMockRunner
 
 
@@ -73,22 +72,17 @@ class CurrencyExchangeViewModelTest {
 
     @Test
     fun `verify that correct response create correct view state`() {
+        // This test fails. The only way I found to have this test pass is commenting the `.repeat()` on the ViewModel in order to not end up in an endless loop.
         val firstResponder = CurrencyExchange(CurrencyModel.EUR, 1.0, 100.0)
         val currencyList = listOf(
-            RateModel(CurrencyModel.GBP, 1.19),
             RateModel(CurrencyModel.AUD, 1.59),
-            RateModel(CurrencyModel.CHF, 0.88)
+            RateModel(CurrencyModel.CHF, 0.88),
+            RateModel(CurrencyModel.GBP, 1.19)
         )
+
         // Arrange
-        Mockito.`when`(currencyRepo.getCurrencyByBase("EUR"))
-            .thenReturn(
-                Single.just(
-                    CurrenciesExchangeModel(
-                        CurrencyModel.EUR,
-                        currencyList
-                    )
-                )
-            )
+        Mockito.doReturn(Single.just(CurrenciesExchangeModel(CurrencyModel.EUR, currencyList)))
+            .`when`(currencyRepo).getCurrencyByBase("EUR")
 
         // Act: view model init fires api call
         setupViewModel()
