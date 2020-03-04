@@ -15,6 +15,8 @@ import com.lnicolet.domain.model.RateModel
 import com.lnicolet.domain.repository.CurrencyRepository
 import com.lnicolet.domain.usecase.CurrencyExchangeUseCase
 import io.reactivex.Single
+import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -24,12 +26,14 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.powermock.modules.junit4.PowerMockRunner
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import java.util.concurrent.TimeUnit
 
 
 @RunWith(PowerMockRunner::class)
 class CurrencyExchangeViewModelTest {
 
-    // Forces RxJava to execute on a specified thread for tests (Thanks to Tristan)
+    // Forces RxJava to execute on a specified thread for tests
     @Rule
     val rxRule = RxSchedulerRule()
     @Rule
@@ -84,8 +88,13 @@ class CurrencyExchangeViewModelTest {
         Mockito.doReturn(Single.just(CurrenciesExchangeModel(CurrencyModel.EUR, currencyList)))
             .`when`(currencyRepo).getCurrencyByBase("EUR")
 
+        val scheduler = TestScheduler()
+        RxJavaPlugins.setComputationSchedulerHandler { scheduler }
+
         // Act: view model init fires api call
         setupViewModel()
+
+        scheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
 
         // Assert
         Mockito.verify(postDetailsViewStateObserver)
