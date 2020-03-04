@@ -26,7 +26,6 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.powermock.modules.junit4.PowerMockRunner
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.concurrent.TimeUnit
 
 
@@ -103,6 +102,53 @@ class CurrencyExchangeViewModelTest {
                     firstResponder = firstResponder,
                     currencyExchangeList = currencyList.map {
                         CurrencyExchange(it.currency, it.rate, firstResponder.baseValue)
+                    }.toMutableList()
+                )
+            )
+    }
+
+    @Test
+    fun `verify that updating current value cause list to update value `() {
+        // This test fails. The only way I found to have this test pass is commenting the `.repeat()` on the ViewModel in order to not end up in an endless loop.
+        val firstResponder = CurrencyExchange(CurrencyModel.EUR, 1.0, 100.0)
+        val currencyList = listOf(
+            RateModel(CurrencyModel.AUD, 1.59),
+            RateModel(CurrencyModel.CHF, 0.88),
+            RateModel(CurrencyModel.GBP, 1.19)
+        )
+
+        // Arrange
+        Mockito.doReturn(Single.just(CurrenciesExchangeModel(CurrencyModel.EUR, currencyList)))
+            .`when`(currencyRepo).getCurrencyByBase("EUR")
+
+        val scheduler = TestScheduler()
+        RxJavaPlugins.setComputationSchedulerHandler { scheduler }
+
+        // Act: view model init fires api call
+        setupViewModel()
+        scheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
+
+        // Assert
+        Mockito.verify(postDetailsViewStateObserver)
+            .onChanged(
+                CurrencyExchangeViewState.Success(
+                    firstResponder = firstResponder,
+                    currencyExchangeList = currencyList.map {
+                        CurrencyExchange(it.currency, it.rate, firstResponder.baseValue)
+                    }.toMutableList()
+                )
+            )
+        // Act 2
+        currencyExchangeViewModel.updateViewStateWithConversion(15.0)
+        scheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
+
+        // Assert
+        Mockito.verify(postDetailsViewStateObserver)
+            .onChanged(
+                CurrencyExchangeViewState.Success(
+                    firstResponder = firstResponder.apply { baseValue = 15.0 },
+                    currencyExchangeList = currencyList.map {
+                        CurrencyExchange(it.currency, it.rate, 15.0)
                     }.toMutableList()
                 )
             )
