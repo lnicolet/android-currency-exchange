@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.lnicolet.currencyexchange.R
 import com.lnicolet.currencyexchange.exchangelist.model.CurrencyExchange
@@ -25,20 +26,15 @@ data class CurrencyItem(
         fun onCurrencyValueChanged(newValue: Double)
     }
 
-    private val onValueChangedWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {}
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            listener.onCurrencyValueChanged(s?.toString()?.toDoubleOrNull() ?: 0.0)
-        }
-    }
-
     override fun getId() = this.currencyExchange.currencyModel.hashCode().toLong()
 
     override fun getLayout(): Int = R.layout.item_currency
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.root.apply {
+            if (isActive)
+                currency_value_conversion.addTextChangedListener(WithFocusTextWatcher(currency_value_conversion, listener))
+
             setOnClickListener {
                 listener.onCurrencyItemClicked(
                     this@CurrencyItem.currencyExchange
@@ -46,15 +42,7 @@ data class CurrencyItem(
                 currency_value_conversion.requestFocus()
             }
 
-            if (isActive)
-                currency_value_conversion.addTextChangedListener(onValueChangedWatcher)
-            else
-                currency_value_conversion.removeTextChangedListener(onValueChangedWatcher)
-
             currency_model_text.text = currencyExchange.currencyModel.name
-            currency_value_conversion.setText(
-                String.format("%.2f", currencyExchange.getExchangeConversion())
-            )
             currency_flag.setImageDrawable(
                 getDrawableByCurrencyModel(
                     this.context,
@@ -70,6 +58,9 @@ data class CurrencyItem(
                 }
                 false
             }
+            currency_value_conversion.setText(
+                String.format("%.2f", currencyExchange.getExchangeConversion())
+            )
         }
     }
 
@@ -114,4 +105,13 @@ data class CurrencyItem(
                 CurrencyModel.ZAR -> R.drawable.zar
             }
         )
+
+    private class WithFocusTextWatcher(val view: View, val listener: CurrencyItemListener) : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (view.hasFocus())
+                listener.onCurrencyValueChanged(s?.toString()?.toDoubleOrNull() ?: 0.0)
+        }
+    }
 }

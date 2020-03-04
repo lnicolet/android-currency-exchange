@@ -63,6 +63,7 @@ class CurrencyExchangeViewModel @Inject constructor(
             .subscribe(::onGetCurrencyExchangeByBaseSucceeded, ::onGetCurrencyExchangeByBaseFailed)
 
     private fun onGetCurrencyExchangeByBaseSucceeded(exchangeModel: CurrenciesExchangeModel) {
+         if (exchangeModel.baseCurrency != firstResponder.currencyModel) return
         val currencyList = exchangeModel.rates.map { rateModel ->
             CurrencyExchange(
                 rateModel.currency,
