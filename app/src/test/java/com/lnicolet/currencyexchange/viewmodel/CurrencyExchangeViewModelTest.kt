@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import com.lnicolet.currencyexchange.exchangelist.CurrencyExchangeViewModel
 import com.lnicolet.currencyexchange.exchangelist.CurrencyExchangeViewState
 import com.lnicolet.currencyexchange.exchangelist.model.CurrencyExchange
-import com.lnicolet.currencyexchange.utils.RxSchedulerRule
+import com.lnicolet.data.utils.RxSchedulerRule
 import com.lnicolet.domain.model.CurrenciesExchangeModel
 import com.lnicolet.domain.model.CurrencyModel
 import com.lnicolet.domain.model.RateModel
