@@ -27,26 +27,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
-    implementation 'javax.inject:javax.inject:1'
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-    testImplementation 'androidx.arch.core:core-testing:2.1.0'
-    testImplementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    testImplementation 'org.mockito:mockito-core:3.3.0'
-    testImplementation 'org.mockito:mockito-inline:3.3.0'
-    testImplementation 'com.github.plastix.rxschedulerrule:rx2:1.0.2'
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+    def dataDependenciesImpl = rootProject.ext.dataDependenciesImplementation
+    def dataTestDependenciesImpl = rootProject.ext.dataTestDependenciesImplementation
+    def dataAndroidTestDependenciesImpl = rootProject.ext.dataAndroidTestDependenciesImplementation
 
-    androidTestImplementation "org.mockito:mockito-android:3.3.0"
-    androidTestImplementation "androidx.test:runner:1.2.0"
-    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
+    implementation dataDependenciesImpl
+    testImplementation dataTestDependenciesImpl
+    androidTestImplementation dataAndroidTestDependenciesImpl
 
     implementation project(path: ':domain')
-
-    testImplementation 'junit:junit:4.12'
 }

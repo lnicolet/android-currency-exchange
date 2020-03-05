@@ -1,0 +1,101 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    appDependencies = [
+            implementation: [
+                    kotlin            : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+                    androidCompat     : "androidx.appcompat:appcompat:1.1.0",
+                    androidxCore      : "androidx.core:core-ktx:1.2.0",
+                    androidxConstraint: "androidx.constraintlayout:constraintlayout:1.1.3",
+                    androidxRecycler  : "androidx.recyclerview:recyclerview:1.2.0-alpha01",
+                    androidxLifecycle : "androidx.lifecycle:lifecycle-extensions:2.2.0",
+                    rxJava            : "io.reactivex.rxjava2:rxkotlin:2.4.0",
+                    rxJavaAndroid     : "io.reactivex.rxjava2:rxandroid:2.1.1",
+                    dagger            : "com.google.dagger:dagger-android:2.26",
+                    daggerAndroid     : "com.google.dagger:dagger-android-support:2.26",
+                    retrofit          : "com.squareup.retrofit2:retrofit:2.7.2",
+                    retrofitRxJava    : "com.squareup.retrofit2:adapter-rxjava2:2.7.2",
+                    retrofitGson      : "com.squareup.retrofit2:converter-gson:2.7.2",
+                    loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:4.4.0",
+                    groupie           : "com.xwray:groupie:2.7.0",
+                    groupieAndroid    : "com.xwray:groupie-kotlin-android-extensions:2.7.0"
+            ],
+            kapt          : [
+                    daggerCompiler        : "com.google.dagger:dagger-compiler:2.26",
+                    daggerCompilterAndroid: "com.google.dagger:dagger-android-processor:2.26",
+                    androidxAnnotation    : "androidx.annotation:annotation:1.1.0"
+            ]
+    ]
+    appTestDependencies = [
+            testImplementation       : [
+                    powerMockJUnit  : "org.powermock:powermock-module-junit4:2.0.5",
+                    powerMockMockito: "org.powermock:powermock-api-mockito2:2.0.5",
+                    androidxCore    : "androidx.arch.core:core-testing:2.1.0",
+                    jUnit           : "junit:junit:4.12"
+            ],
+            androidTestImplementation: [
+                    jUnit                  : "androidx.test.ext:junit:1.1.1",
+                    androidxEspressoCore   : "androidx.test.espresso:espresso-core:3.2.0",
+                    androidxEspressoContrib: "androidx.test.espresso:espresso-contrib:3.2.0",
+                    mockitoAndroid         : "org.mockito:mockito-android:3.3.0",
+                    mockitoKotlin          : "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0",
+                    androidxRunner         : "androidx.test:runner:1.3.0-alpha04",
+                    androidxCore           : "androidx.test:core:1.2.0",
+                    androidxRules          : "androidx.test:rules:1.2.0",
+                    androidxCoreTesting    : "androidx.arch.core:core-testing:2.1.0",
+                    kakao                  : "com.agoda.kakao:kakao:2.2.0"
+            ]
+    ]
+    dataDependencies = [
+            implementation: [
+                    kotlin      : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+                    retrofitGson: "com.squareup.retrofit2:converter-gson:2.7.2",
+                    rxJava      : "io.reactivex.rxjava2:rxkotlin:2.4.0",
+                    inject      : "javax.inject:javax.inject:1"
+            ]
+    ]
+    dataTestDependencies = [
+            testImplementation       : [
+                    jUnit                     : "junit:junit:4.12",
+                    kotlinJunit               : "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version",
+                    androidxCore              : "androidx.arch.core:core-testing:2.1.0",
+                    androidxLifecycleExtension: "androidx.lifecycle:lifecycle-extensions:2.2.0",
+                    mockitoCore               : "org.mockito:mockito-core:3.3.0",
+                    mockitoInline             : "org.mockito:mockito-inline:3.3.0",
+                    mickitoKotlin             : "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0",
+                    rxSchedulerRule           : "com.github.plastix.rxschedulerrule:rx2:1.0.2"
+            ],
+            androidTestImplementation: [
+                    mockitoAndroid     : "org.mockito:mockito-android:3.3.0",
+                    androidxRunner     : "androidx.test:runner:1.2.0",
+                    androidxCoreTesting: "androidx.arch.core:core-testing:2.1.0",
+                    androidxCore       : "androidx.test.espresso:espresso-core:3.2.0"
+            ]
+    ]
+    domainDependencies = [
+            implementation: [
+                    kotlin      : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+                    retrofitGson: "com.squareup.retrofit2:converter-gson:2.7.2",
+                    rxKotlin    : "io.reactivex.rxjava2:rxkotlin:2.4.0",
+                    inject      : "javax.inject:javax.inject:1"
+            ]
+    ]
+
+    // app
+    appDependenciesImplementation = appDependencies['implementation'].values()
+    appKaptDependenciesImplementation = appDependencies['kapt'].values()
+    appTestDependenciesImplementation = appTestDependencies['testImplementation'].values()
+    appAndroidTestDependenciesImplementation = appTestDependencies['androidTestImplementation'].values()
+
+    // data
+    dataDependenciesImplementation = dataDependencies['implementation'].values()
+    dataTestDependenciesImplementation = dataTestDependencies['testImplementation'].values()
+    dataAndroidTestDependenciesImplementation = dataTestDependencies['testImplementation'].values()
+
+    // domain
+    domainDependenciesImplementation = domainDependencies['implementation'].values()
+}

@@ -27,10 +27,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
-    implementation 'javax.inject:javax.inject:1'
+    def domainDependenciesImpl = rootProject.ext.domainDependenciesImplementation
 
-    testImplementation 'junit:junit:4.12'
+    implementation domainDependenciesImpl
 }
