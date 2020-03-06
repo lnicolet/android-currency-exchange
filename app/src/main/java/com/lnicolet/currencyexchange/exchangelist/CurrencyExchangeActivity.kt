@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.lnicolet.currencyexchange.R
 import com.lnicolet.currencyexchange.core.gone
 import com.lnicolet.currencyexchange.core.observe
@@ -14,7 +15,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_currency_exchange.*
 import javax.inject.Inject
 
 class CurrencyExchangeActivity : DaggerAppCompatActivity(), CurrencyItem.CurrencyItemListener {
@@ -28,7 +29,7 @@ class CurrencyExchangeActivity : DaggerAppCompatActivity(), CurrencyItem.Currenc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_currency_exchange)
         setupViewModel()
         setupRecycler()
     }
@@ -37,7 +38,6 @@ class CurrencyExchangeActivity : DaggerAppCompatActivity(), CurrencyItem.Currenc
         recycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recycler.adapter = groupAdapter
         recycler.setHasFixedSize(true)
-
     }
 
     private fun setupViewModel() {
@@ -51,13 +51,20 @@ class CurrencyExchangeActivity : DaggerAppCompatActivity(), CurrencyItem.Currenc
             CurrencyExchangeViewState.Loading -> {
                 loading.visible()
                 recycler.gone()
+                bankruptError.gone()
             }
             is CurrencyExchangeViewState.Error<*> -> {
                 loading.gone()
                 recycler.gone()
+                bankruptError.visible()
+                Snackbar.make(root, R.string.something_went_wrong, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.retry) {
+                        viewModel.retryFailedApiCall()
+                    }.show()
             }
             is CurrencyExchangeViewState.Success -> {
                 loading.gone()
+                bankruptError.gone()
                 recycler.visible()
                 val section = mutableListOf<CurrencyItem>()
                 section.add(

@@ -45,6 +45,12 @@ class CurrencyExchangeViewModel @Inject constructor(
         )
     }
 
+    fun retryFailedApiCall() {
+        _currencyExchangeViewState.postValue(CurrencyExchangeViewState.Loading)
+        lastDisposable?.dispose()
+        lastDisposable = setupCurrencyExchangeAPICall()
+    }
+
     fun updateFirstResponder(currencyExchange: CurrencyExchange) {
         lastDisposable?.dispose()
         firstResponder = currencyExchange.apply {

@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 
 fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) {
     liveData.observe(this, Observer(body))
@@ -19,4 +20,13 @@ fun View.gone() {
 
 fun View.invisible() {
     visibility = View.INVISIBLE
+}
+
+fun Snackbar.dismissAndShow() {
+    if (isShownOrQueued) {
+        dismiss()
+        show()
+    } else {
+        show()
+    }
 }

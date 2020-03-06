@@ -38,6 +38,7 @@ ext {
                     androidxConstraint: "androidx.constraintlayout:constraintlayout:$androidxConstraintVersion",
                     androidxRecycler  : "androidx.recyclerview:recyclerview:$androidxRecyclerVersion",
                     androidxLifecycle : "androidx.lifecycle:lifecycle-extensions:$androidxLifecycleVersion",
+                    androidDesign     : "com.android.support:design:25.3.1",
                     rxJava            : "io.reactivex.rxjava2:rxkotlin:$rxJavaVersion",
                     rxJavaAndroid     : "io.reactivex.rxjava2:rxandroid:$rxJavaAndroidVersion",
                     dagger            : "com.google.dagger:dagger-android:$daggerVersion",

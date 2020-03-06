@@ -2,4 +2,7 @@
     <string name="app_name">CurrencyExchange</string>
     <string name="currency_content_description">Flag for the currency</string>
     <string name="enter_value">Enter value</string>
+    <string name="retry">Retry.</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="bankrupt_content_description">Icon to display an error on the screen</string>
 </resources>
