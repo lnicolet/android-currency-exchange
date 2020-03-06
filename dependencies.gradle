@@ -5,83 +5,107 @@ allprojects {
 }
 
 ext {
+    androidxCompatVersion = '1.1.0'
+    androidxCoreVersion = '1.2.0'
+    androidxConstraintVersion = '1.1.3'
+    androidxRecyclerVersion = '1.2.0-alpha01'
+    androidxLifecycleVersion = '2.2.0'
+    rxJavaVersion = '2.4.0'
+    rxJavaAndroidVersion = '2.1.1'
+    daggerVersion = '2.26'
+    retrofitVersion = '2.7.2'
+    loggingInterceptorVersion = '4.4.0'
+    groupieVersion = '2.7.0'
+    androidxAnnotationVersion = '1.1.0'
+
+    powerMockVersion = '2.0.5'
+    androixCoreTestingVersion = '2.1.0'
+    jUnitVersion = '4.12'
+    androidxJunitVersion = '1.1.1'
+    androidxEspressoVersion = '3.2.0'
+    mockitoAndroidVersion = '3.3.0'
+    mockitoKotlinVersion = '2.2.0'
+    androidxTestRunnerVersion = '1.3.0-alpha04'
+    injectVersion = '1'
+    rxSchedulerRuleVersion = '1.0.2'
+    androidxRunnerVersion = '1.2.0'
+
     appDependencies = [
             implementation: [
                     kotlin            : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
-                    androidCompat     : "androidx.appcompat:appcompat:1.1.0",
-                    androidxCore      : "androidx.core:core-ktx:1.2.0",
-                    androidxConstraint: "androidx.constraintlayout:constraintlayout:1.1.3",
-                    androidxRecycler  : "androidx.recyclerview:recyclerview:1.2.0-alpha01",
-                    androidxLifecycle : "androidx.lifecycle:lifecycle-extensions:2.2.0",
-                    rxJava            : "io.reactivex.rxjava2:rxkotlin:2.4.0",
-                    rxJavaAndroid     : "io.reactivex.rxjava2:rxandroid:2.1.1",
-                    dagger            : "com.google.dagger:dagger-android:2.26",
-                    daggerAndroid     : "com.google.dagger:dagger-android-support:2.26",
-                    retrofit          : "com.squareup.retrofit2:retrofit:2.7.2",
-                    retrofitRxJava    : "com.squareup.retrofit2:adapter-rxjava2:2.7.2",
-                    retrofitGson      : "com.squareup.retrofit2:converter-gson:2.7.2",
-                    loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:4.4.0",
-                    groupie           : "com.xwray:groupie:2.7.0",
-                    groupieAndroid    : "com.xwray:groupie-kotlin-android-extensions:2.7.0"
+                    androidxCompat    : "androidx.appcompat:appcompat:$androidxCompatVersion",
+                    androidxCore      : "androidx.core:core-ktx:$androidxCoreVersion",
+                    androidxConstraint: "androidx.constraintlayout:constraintlayout:$androidxConstraintVersion",
+                    androidxRecycler  : "androidx.recyclerview:recyclerview:$androidxRecyclerVersion",
+                    androidxLifecycle : "androidx.lifecycle:lifecycle-extensions:$androidxLifecycleVersion",
+                    rxJava            : "io.reactivex.rxjava2:rxkotlin:$rxJavaVersion",
+                    rxJavaAndroid     : "io.reactivex.rxjava2:rxandroid:$rxJavaAndroidVersion",
+                    dagger            : "com.google.dagger:dagger-android:$daggerVersion",
+                    daggerAndroid     : "com.google.dagger:dagger-android-support:$daggerVersion",
+                    retrofit          : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+                    retrofitRxJava    : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+                    retrofitGson      : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+                    loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion",
+                    groupie           : "com.xwray:groupie:$groupieVersion",
+                    groupieAndroid    : "com.xwray:groupie-kotlin-android-extensions:$groupieVersion"
             ],
             kapt          : [
-                    daggerCompiler        : "com.google.dagger:dagger-compiler:2.26",
-                    daggerCompilterAndroid: "com.google.dagger:dagger-android-processor:2.26",
-                    androidxAnnotation    : "androidx.annotation:annotation:1.1.0"
+                    daggerCompiler        : "com.google.dagger:dagger-compiler:$daggerVersion",
+                    daggerCompilterAndroid: "com.google.dagger:dagger-android-processor:$daggerVersion",
+                    androidxAnnotation    : "androidx.annotation:annotation:$androidxAnnotationVersion"
             ]
     ]
     appTestDependencies = [
             testImplementation       : [
-                    powerMockJUnit  : "org.powermock:powermock-module-junit4:2.0.5",
-                    powerMockMockito: "org.powermock:powermock-api-mockito2:2.0.5",
-                    androidxCore    : "androidx.arch.core:core-testing:2.1.0",
-                    jUnit           : "junit:junit:4.12"
+                    powerMockJUnit  : "org.powermock:powermock-module-junit4:$powerMockVersion",
+                    powerMockMockito: "org.powermock:powermock-api-mockito2:$powerMockVersion",
+                    androidxCore    : "androidx.arch.core:core-testing:$androixCoreTestingVersion",
+                    jUnit           : "junit:junit:$jUnitVersion"
             ],
             androidTestImplementation: [
-                    jUnit                  : "androidx.test.ext:junit:1.1.1",
-                    androidxEspressoCore   : "androidx.test.espresso:espresso-core:3.2.0",
-                    androidxEspressoContrib: "androidx.test.espresso:espresso-contrib:3.2.0",
-                    mockitoAndroid         : "org.mockito:mockito-android:3.3.0",
-                    mockitoKotlin          : "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0",
-                    androidxRunner         : "androidx.test:runner:1.3.0-alpha04",
-                    androidxCore           : "androidx.test:core:1.2.0",
-                    androidxRules          : "androidx.test:rules:1.2.0",
-                    androidxCoreTesting    : "androidx.arch.core:core-testing:2.1.0",
-                    kakao                  : "com.agoda.kakao:kakao:2.2.0"
+                    jUnit                  : "androidx.test.ext:junit:$androidxJunitVersion",
+                    androidxEspressoCore   : "androidx.test.espresso:espresso-core:$androidxEspressoVersion",
+                    androidxEspressoContrib: "androidx.test.espresso:espresso-contrib:$androidxEspressoVersion",
+                    mockitoAndroid         : "org.mockito:mockito-android:$mockitoAndroidVersion",
+                    mockitoKotlin          : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
+                    androidxRunner         : "androidx.test:runner:$androidxTestRunnerVersion",
+                    androidxCore           : "androidx.test:core:$androidxCoreVersion",
+                    androidxRules          : "androidx.test:rules:$androidxCoreVersion",
+                    androidxCoreTesting    : "androidx.arch.core:core-testing:$androixCoreTestingVersion"
             ]
     ]
     dataDependencies = [
             implementation: [
                     kotlin      : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
-                    retrofitGson: "com.squareup.retrofit2:converter-gson:2.7.2",
-                    rxJava      : "io.reactivex.rxjava2:rxkotlin:2.4.0",
-                    inject      : "javax.inject:javax.inject:1"
+                    retrofitGson: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+                    rxJava      : "io.reactivex.rxjava2:rxkotlin:$rxJavaVersion",
+                    inject      : "javax.inject:javax.inject:$injectVersion"
             ]
     ]
     dataTestDependencies = [
             testImplementation       : [
-                    jUnit                     : "junit:junit:4.12",
+                    jUnit                     : "junit:junit:$jUnitVersion",
                     kotlinJunit               : "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version",
-                    androidxCore              : "androidx.arch.core:core-testing:2.1.0",
-                    androidxLifecycleExtension: "androidx.lifecycle:lifecycle-extensions:2.2.0",
-                    mockitoCore               : "org.mockito:mockito-core:3.3.0",
-                    mockitoInline             : "org.mockito:mockito-inline:3.3.0",
-                    mickitoKotlin             : "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0",
-                    rxSchedulerRule           : "com.github.plastix.rxschedulerrule:rx2:1.0.2"
+                    androidxCore              : "androidx.arch.core:core-testing:$androixCoreTestingVersion",
+                    androidxLifecycleExtension: "androidx.lifecycle:lifecycle-extensions:$androidxLifecycleVersion",
+                    mockitoCore               : "org.mockito:mockito-core:$mockitoAndroidVersion",
+                    mockitoInline             : "org.mockito:mockito-inline:$mockitoAndroidVersion",
+                    mickitoKotlin             : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
+                    rxSchedulerRule           : "com.github.plastix.rxschedulerrule:rx2:$rxSchedulerRuleVersion"
             ],
             androidTestImplementation: [
-                    mockitoAndroid     : "org.mockito:mockito-android:3.3.0",
-                    androidxRunner     : "androidx.test:runner:1.2.0",
-                    androidxCoreTesting: "androidx.arch.core:core-testing:2.1.0",
-                    androidxCore       : "androidx.test.espresso:espresso-core:3.2.0"
+                    mockitoAndroid     : "org.mockito:mockito-android:$mockitoAndroidVersion",
+                    androidxRunner     : "androidx.test:runner:$androidxRunnerVersion",
+                    androidxCoreTesting: "androidx.arch.core:core-testing:$androixCoreTestingVersion",
+                    androidxCore       : "androidx.test.espresso:espresso-core:$androidxEspressoVersion"
             ]
     ]
     domainDependencies = [
             implementation: [
                     kotlin      : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
-                    retrofitGson: "com.squareup.retrofit2:converter-gson:2.7.2",
-                    rxKotlin    : "io.reactivex.rxjava2:rxkotlin:2.4.0",
-                    inject      : "javax.inject:javax.inject:1"
+                    retrofitGson: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+                    rxKotlin    : "io.reactivex.rxjava2:rxkotlin:$rxJavaVersion",
+                    inject      : "javax.inject:javax.inject:$injectVersion"
             ]
     ]
 
